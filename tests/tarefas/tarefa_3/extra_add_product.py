@@ -1,4 +1,3 @@
-import unittest
 
 from management.product_handler import add_product_extra
 
@@ -69,7 +68,8 @@ class TestExtraAddProduct(unittest.TestCase):
             "type": "drink",
         }
 
-        msg = self.base_msg % "adicionando corretamente o produto ao menu vazio"
+        msg = self.base_msg % """adicionando corretamente o produto 
+        ao menu vazio"""
         self.assertDictEqual(empty_list[-1], expected, msg)
 
     def test_extra_add_product_required_keys(self):
@@ -89,7 +89,8 @@ class TestExtraAddProduct(unittest.TestCase):
         empty_list = []
 
         msg = self.base_msg % (
-            "levantando um `KeyError` caso alguma chave obrigatória nao seja passada",
+            """levantando um `KeyError` caso alguma chave 
+            obrigatória nao seja passada""",
         )
 
         for key in required_keys.copy():

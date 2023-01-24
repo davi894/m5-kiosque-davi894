@@ -16,7 +16,8 @@ class TestGetProductByIdRaiseError(unittest.TestCase):
         """
 
         msg = self.base_msg % (
-            "levantando um `TypeError` caso o parâmetro passado não seja um inteiro",
+            """levantando um `TypeError` caso o 
+            parâmetro passado não seja um inteiro""",
         )
         with self.assertRaises(TypeError, msg=msg) as err:
             get_product_by_id([1, 2, 3])

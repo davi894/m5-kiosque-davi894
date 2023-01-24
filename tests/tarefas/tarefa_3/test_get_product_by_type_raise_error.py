@@ -10,11 +10,14 @@ class TestGetProductByTypeRaiseError(unittest.TestCase):
 
     def test_get_product_by_type_raises_type_error(self):
         """
-        Testa se a função `get_product_by_type` levanta um TypeError caso o tipo do parâmetro passado não seja uma string [0 pts].
+        Testa se a função `get_product_by_type` 
+        levanta um TypeError caso o tipo do parâmetro passado não seja uma 
+        string [0 pts].
         """
 
         msg = self.base_msg % (
-            "levantando um `TypeError` caso o parâmetro passado não seja uma string",
+            """levantando um `TypeError` caso o 
+            parâmetro passado não seja uma string""",
         )
         with self.assertRaises(TypeError, msg=msg) as err:
             get_products_by_type([1, 2, 3])

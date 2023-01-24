@@ -37,7 +37,8 @@ class TestGetProductByType(unittest.TestCase):
         msg = self.base_msg % "retornando uma lista"
         self.assertIsInstance(result, list, msg)
 
-        msg = self.base_msg % ("retornando corretamente os produtos encontrados",)
+        msg = self.base_msg % ("""retornando corretamente 
+        os produtos encontrados""",)
         self.assertListEqual(result, expected, msg)
 
     def test_get_product_by_type_with_non_existing_type(self):
@@ -53,7 +54,8 @@ class TestGetProductByType(unittest.TestCase):
 
         msg = (
             self.base_msg
-            % "retornando uma lista vazia caso não existam produtos do tipo passado",
+            % """retornando uma lista vazia caso não existam 
+            produtos do tipo passado""",
         )
 
         self.assertListEqual(result, expected, msg)

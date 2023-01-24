@@ -2,7 +2,6 @@ import unittest
 
 from management.product_handler import menu_report
 
-
 class TestMenuReport(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:

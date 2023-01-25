@@ -1,9 +1,13 @@
 from menu import products
-from collections import Counter
 import json
 
 
 def get_product_by_id(_id):
+
+    id = type(_id)
+
+    if id is not int:
+        raise TypeError("product id must be an int")
 
     result = []
 
@@ -20,12 +24,18 @@ def get_product_by_id(_id):
 
 
 def get_products_by_type(typeProduct):
+
+    tipo = type(typeProduct)
+
+    if tipo is not str:
+        raise TypeError("product type must be a str")
+
     list = []
 
     for itens in products:
         object = json.dumps(itens)
-        type = json.loads(object)["type"]
-        if type == typeProduct:
+        types = json.loads(object)["type"]
+        if types == typeProduct:
             list.append(itens)
 
     if list == []:
@@ -34,47 +44,53 @@ def get_products_by_type(typeProduct):
     return list
 
 
-def add_product(list, objProduct):
+def add_product(array, **objProduct):
 
-    arrIndex = []
+    teste = ['title', 'price', 'rating', 'description', 'type']
+    print(teste)
+    print(list(objProduct))
+    if teste is not list(objProduct):
+        print("campos faltando")
 
-    if list == []:
+    arr_index = []
+
+    if array == []:
         key, value = '_id', 1
         objProduct.update({key: value})
-        list.append(objProduct)
+        array.append(objProduct)
         return objProduct
 
-    for itens in products:
+    for itens in array:
         object = json.dumps(itens)
         index = json.loads(object)["_id"]
-        arrIndex.append(index)
+        arr_index.append(index)
 
-    indexUpdate = max(arrIndex) + 1
+    index_update = max(arr_index) + 1
 
-    key, value = '_id', indexUpdate
+    key, value = '_id', index_update
     objProduct.update({key: value})
-    list.append(objProduct)
+    array.append(objProduct)
 
     return objProduct
 
 
-def continuacao(lista):
-    arrayTipoEContagem = []
+def contagem_de_tipos(lista):
+    array_tipo_e_contagem = []
 
     for listaItem in lista:
-        arrayTipoEContagem.append(listaItem.split(","))
+        array_tipo_e_contagem.append(listaItem.split(","))
 
-    arrayNumberMaior = []
+    array_number_maior = []
 
-    for x in arrayTipoEContagem:
-        arrayNumberMaior.append(int(x[1]))
+    for x in array_tipo_e_contagem:
+        array_number_maior.append(int(x[1]))
 
-    maiorNumeroDosTipos = max(arrayNumberMaior)
+    maior_numero_contagem_tipos = max(array_number_maior)
 
     type = ""
 
-    for x in arrayTipoEContagem:
-        if int(x[1]) == maiorNumeroDosTipos:
+    for x in array_tipo_e_contagem:
+        if int(x[1]) == maior_numero_contagem_tipos:
             type += x[0]
 
     return type
@@ -95,30 +111,16 @@ def menu_report():
 
     tipos.sort()
 
-    selecionandoQuantidadeETipagem = []
+    selecionando_quantidade_e_tipo = []
 
     for itens in tipos:
-        selecionandoQuantidadeETipagem.append(f'{itens},{tipos.count(itens)}')
+        selecionando_quantidade_e_tipo.append(f'{itens},{tipos.count(itens)}')
 
-    retirandoValoresRepetidosDosTypes = list(
-        set(selecionandoQuantidadeETipagem))
+    retirando_valores_repetidos = list(
+        set(selecionando_quantidade_e_tipo))
 
-    typeFinal = continuacao(retirandoValoresRepetidosDosTypes)
+    typeFinal = contagem_de_tipos(retirando_valores_repetidos)
 
     preco_medio = round((value / contagem_de_produtos).real, 2)
 
     return f'Products Count: {contagem_de_produtos} - Average Price: ${preco_medio} - Most Common Type: {typeFinal}'
-
-
-# Product Count: Contagem do total de produtos do menu.
-# Average Price: Média dos preços de todos os produtos do
-# menu, arredondada para 2 casas decimais no máximo.
-# Most Common Type: O tipo de produto mais comum, ou seja, o tipo
-# que contém maior quantidade de produtos no menu.
-# O retorno deve ser uma string formatada exatamente
-# como no exemplo abaixo, com o devido dinamismo de
-# cada característica:
-# "Products
-# Count: <contagem_de_produtos> -
-# Average Price: $<preco_medio> -
-# Most Common Type: <tipo_mais_comum>"

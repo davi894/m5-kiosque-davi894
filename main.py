@@ -20,10 +20,14 @@ table_2 = [
     {"_id": 21, "amount": 5},
 ]
 
-print(get_product_by_id(28))
-print(get_products_by_type('drink'))
-print(menu_report())
-print(add_product(products, new_product))
-print(add_product([], new_product))
-print(calculate_tab(table_1))
-print(calculate_tab(table_2))
+meny_empty = []
+# print(get_product_by_id(28))
+# print(get_products_by_type('drink'))
+# print(menu_report())
+# print(add_product(products, new_product))
+# print(add_product(meny_empty, new_product))
+
+print(add_product(meny_empty, new_product))
+
+# print(calculate_tab(table_1))
+# print(calculate_tab(table_2))

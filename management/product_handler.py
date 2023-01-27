@@ -12,9 +12,7 @@ def get_product_by_id(_id):
     result = []
 
     for item in products:
-        object = json.dumps(item)
-        index = json.loads(object)["_id"]
-        if index == _id:
+        if item["_id"] == _id:
             result.append(item)
 
     if result == []:
@@ -33,9 +31,7 @@ def get_products_by_type(typeProduct):
     list = []
 
     for itens in products:
-        object = json.dumps(itens)
-        types = json.loads(object)["type"]
-        if types == typeProduct:
+        if itens["type"] == typeProduct:
             list.append(itens)
 
     if list == []:
@@ -46,12 +42,6 @@ def get_products_by_type(typeProduct):
 
 def add_product(array, **objProduct):
 
-    teste = ['title', 'price', 'rating', 'description', 'type']
-    print(teste)
-    print(list(objProduct))
-    if teste is not list(objProduct):
-        print("campos faltando")
-
     arr_index = []
 
     if array == []:
@@ -61,9 +51,7 @@ def add_product(array, **objProduct):
         return objProduct
 
     for itens in array:
-        object = json.dumps(itens)
-        index = json.loads(object)["_id"]
-        arr_index.append(index)
+        arr_index.append(itens["_id"])
 
     index_update = max(arr_index) + 1
 
@@ -103,11 +91,8 @@ def menu_report():
     tipos = []
 
     for itens in products:
-        object = json.dumps(itens)
-        price = json.loads(object)["price"]
-        type = json.loads(object)["type"]
-        tipos.append(type)
-        value += price
+        tipos.append(itens["type"])
+        value += itens["price"]
 
     tipos.sort()
 
@@ -124,3 +109,35 @@ def menu_report():
     preco_medio = round((value / contagem_de_produtos).real, 2)
 
     return f'Products Count: {contagem_de_produtos} - Average Price: ${preco_medio} - Most Common Type: {typeFinal}'
+
+
+def add_product_extra(products_list, *required_keys_args, **new_product_args):
+
+    arr_verify_keys_required = []
+
+    for keys_required in required_keys_args:
+        for new_keys in new_product_args:
+            if keys_required == new_keys:
+                arr_verify_keys_required.append(new_keys)
+
+    if len(arr_verify_keys_required) < len(required_keys_args):
+        raise KeyError("field rating is required")
+
+    arr_index = []
+
+    if products_list == []:
+        key, value = '_id', 1
+        new_product_args.update({key: value})
+        products_list.append(new_product_args)
+        return new_product_args
+
+    for itens in products_list:
+        arr_index.append(itens["_id"])
+
+    index_update = max(arr_index) + 1
+
+    key, value = '_id', index_update
+    new_product_args.update({key: value})
+    products_list.append(new_product_args)
+
+    return new_product_args

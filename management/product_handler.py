@@ -1,5 +1,4 @@
 from menu import products
-import json
 
 
 def get_product_by_id(_id):
